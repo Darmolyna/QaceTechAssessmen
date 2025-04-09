@@ -1,33 +1,26 @@
-name: Cypress Tests
+name: Cypress tests
 
-on:
+on: 
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  cypress-tests:
+  cypress-run:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20.13.1'
+    
+    - name: Install project dependencies
+      run: npm install
 
-      - name: Cache Cypress binary
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/Cypress
-          key: ${{ runner.os }}-cypress-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-cypress-
+    - name: Install Cypress Binary
+      run: npx cypress install  # This will install the Cypress binary
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Install Cypress binary
-        run: npx cypress install
-
-      - name: Run Cypress tests
-        run: npx cypress run
+    - name: Run Cypress tests
+      run: npx cypress run
