@@ -20,7 +20,7 @@ jobs:
       run: npm install
 
     - name: Install Cypress Binary
-      run: npx cypress install  # This will install the Cypress binary
+      run: npx cypress install
 
     - name: Run Cypress tests
       run: npx cypress run
